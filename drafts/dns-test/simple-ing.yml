@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dns-test
+  namespace: kube-system 
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+  - match: Host(`ion-cluster.local`) && PathPrefix(`/nginx`)
+    kind: Rule
+    services:
+    - name: nginx
+      port: 80

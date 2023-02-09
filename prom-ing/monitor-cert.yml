@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: monitoring-cert
+  namespace: k3s-monitor
+spec:
+  secretName: monitoring-secret
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+  commonName: monitoring.cluster.local
+  dnsNames:
+  - monitoring.cluster.local
+  privateKey:
+    algorithm: ECDSA
