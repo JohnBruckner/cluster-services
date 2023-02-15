@@ -6,9 +6,13 @@ metadata:
 spec:
   entryPoints:
     - websecure
+    - web
   routes:
     - kind: Rule
-      match: Host(`ion-cluster.local`) && PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+      match: Host(`ion-cluster.home`) && PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+      middlewares:
+        - name: nginx-ingress-auth
+          namespace: kube-system
       services:
         - kind: TraefikService
           name: api@internal

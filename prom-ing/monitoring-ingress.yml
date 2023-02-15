@@ -10,7 +10,7 @@ spec:
     - web
   routes:
   - kind: Rule
-    match: Host(`192.168.1.153.traefik.me`) && PathPrefix(`/prometheus`)
+    match: Host(`ion-cluster.home`) && PathPrefix(`/prometheus`)
     services:
     - name: kube-prometheus-stack-prometheus
       port: 9090
@@ -19,7 +19,7 @@ spec:
       - name: stripprefix
         namespace: monitoring
   - kind: Rule
-    match: Host(`192.168.1.153.traefik.me`) && PathPrefix(`/alertmanager`)
+    match: Host(`ion-cluster.home`) && PathPrefix(`/alertmanager`)
     services:
     - name: kube-prometheus-stack-alertmanager
       port: 9093
@@ -28,7 +28,7 @@ spec:
       - name: stripprefix
         namespace: monitoring
   - kind: Rule
-    match: Host(`192.168.1.153.traefik.me`) && PathPrefix(`/grafana`)
+    match: Host(`ion-cluster.home`) && PathPrefix(`/grafana`)
     services:
     - name: kube-prometheus-stack-grafana
       port: 80
@@ -36,5 +36,3 @@ spec:
     middlewares:
       - name: stripprefix
         namespace: monitoring
-  tls:
-    secretName: monitoring-secret
