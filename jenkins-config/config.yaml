@@ -93,7 +93,7 @@ controller:
   # If you are not using the provided ingress you can specify `controller.jenkinsUrl` to change the url definition.
   # jenkinsUrl: ""
   # If you set this prefix and use ingress controller then you might want to set the ingress path below
-  # jenkinsUriPrefix: "/jenkins"
+  jenkinsUriPrefix: "/jenkins"
   # Enable pod security context (must be `true` if podSecurityContextOverride, runAsUser or fsGroup are set)
   usePodSecurityContext: true
   # Note that `runAsUser`, `fsGroup`, and `securityContextCapabilities` are
@@ -137,7 +137,7 @@ controller:
   #   foo: bar
   #   bar: foo
   # Jenkins controller service labels
-  serviceLabels: {jenkins-svc}
+  serviceLabels: {}
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
   # Put labels on Jenkins controller pod
   podLabels: {}
@@ -877,7 +877,7 @@ serviceAccountAgent:
   create: false
   # The name of the ServiceAccount to use.
   # If not set and create is true, a name is generated using the fullname template
-  name:
+  name: jenkins
   annotations: {}
   imagePullSecretName:
 

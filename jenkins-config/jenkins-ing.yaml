@@ -11,12 +11,12 @@ spec:
   - kind: Rule
     match: Host(`ion-cluster.home`) && PathPrefix(`/jenkins`)
     services:
-    - name: jenkins-svc
+    - name: jenkins
       port: 8080
-      namespace: monitoring
-    middlewares:     
-      - name: stripprefix
-        namespace: jenkins
+      namespace: jenkins
+    
+   
+  
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
