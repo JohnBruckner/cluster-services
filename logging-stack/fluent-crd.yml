@@ -1,0 +1,63 @@
+piVersion: fluentbit.fluent.io/v1alpha2
+kind: ClusterOutput
+metadata:
+  name: fluentd
+  labels:
+    fluentbit.fluent.io/enabled: "true"
+    fluentbit.fluent.io/mode: "k8s"
+spec:
+  matchRegex: (?:kube|service)\.(.*)
+  forward:
+    host: fluentd.fluent.svc # check to make sure host is correct
+    port: 24224
+---
+apiVersion: fluentd.fluent.io/v1alpha1
+kind: Fluentd
+metadata:
+  name: fluentd
+  namespace: fluent
+  labels:
+    app.kubernetes.io/name: fluentd
+spec:
+  globalInputs:
+  - forward: 
+      bind: 0.0.0.0
+      port: 24224
+  replicas: 1
+  image: kubesphere/fluentd:v1.14.6
+  fluentdCfgSelector: 
+    matchLabels:
+      config.fluentd.fluent.io/enabled: "true"
+---
+apiVersion: fluentd.fluent.io/v1alpha1
+kind: ClusterFluentdConfig
+metadata:
+  name: cluster-fluentd-config
+  labels:
+    config.fluentd.fluent.io/enabled: "true"
+spec:
+  watchedNamespaces: 
+  - kube-system
+  - default
+  - kafka
+  - elastic
+  - fluent
+  clusterOutputSelector:
+    matchLabels:
+      output.fluentd.fluent.io/scope: "cluster"
+      output.fluentd.fluent.io/enabled: "true"
+---
+apiVersion: fluentd.fluent.io/v1alpha1
+kind: ClusterOutput
+metadata:
+  name: cluster-fluentd-output-es
+  labels:
+    output.fluentd.fluent.io/scope: "cluster"
+    output.fluentd.fluent.io/enabled: "true"
+spec: 
+  outputs: 
+  - elasticsearch:
+      host: elasticsearch-master.elastic.svc
+      port: 9200
+      logstashFormat: true
+      logstashPrefix: fluent-log-cluster-fd
