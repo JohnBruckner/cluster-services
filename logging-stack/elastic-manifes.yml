@@ -7,7 +7,17 @@ spec:
   version: 8.6.2
   nodeSets:
   - name: default
-    count: 1    
+    count: 1
+    podTemplate:
+    # Limiting Resources consumption
+      spec:
+        containers:
+        - name: elasticsearch
+          resources:
+            requests:
+              memory: 1Gi
+            limits:
+              memory: 1Gi   
     config:
       node.store.allow_mmap: false 
     volumeClaimTemplates: 
@@ -24,14 +34,5 @@ spec:
     tls: 
       selfSignedCertificate:
         disabled: true
-  podTemplate:
-    # Limiting Resources consumption
-    spec:
-      containers:
-      - name: elasticsearch
-        resources:
-          requests:
-            memory: 1Gi
-          limits:
-            memory: 1Gi
+  
 
