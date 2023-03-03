@@ -17,11 +17,21 @@ spec:
           limits:
             memory: 500M
             cpu: 1
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: "/kibana/login"
+            port: 5601
   elasticsearchRef:
     name: "efk"
     namespace: logging
+  config:
+    server:
+      basePath: "/kibana"
+      rewriteBasePath: true
+      publicBaseUrl: "http://ion-cluster.home/kibana"
   http:  # NOTE disabling kibana automatic TLS configuration
     tls:
       selfSignedCertificate:
-        disabled: false 
+        disabled: true
 

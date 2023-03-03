@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: es-ingress
+  name: kibana-ingress
   namespace: logging
 spec:
   entryPoints:
@@ -10,9 +10,6 @@ spec:
   routes:
   - kind: Rule
     match: Host(`ion-cluster.home`) && PathPrefix(`/kibana`)
-    middlewares:
-        - name: stripprefix-logging
-          namespace: logging
     services:
     - name: kibana-kb-http
       port: 5601
