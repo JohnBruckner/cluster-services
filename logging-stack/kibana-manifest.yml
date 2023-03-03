@@ -6,10 +6,22 @@ metadata:
 spec:
   version: 8.6.2
   count: 1
+  podTemplate:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+      - name: kibana
+        resources:
+          limits:
+            memory: 500M
+            cpu: 1
   elasticsearchRef:
-    name: "elasticsearch"
+    name: "efk"
+    namespace: logging
   http:  # NOTE disabling kibana automatic TLS configuration
     tls:
       selfSignedCertificate:
-        disabled: true
+        disabled: false 
 
