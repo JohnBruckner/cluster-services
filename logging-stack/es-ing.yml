@@ -10,6 +10,9 @@ spec:
   routes:
   - kind: Rule
     match: Host(`ion-cluster.home`) && PathPrefix(`/elastic`)
+    middlewares:
+        - name: stripprefix-logging
+          namespace: logging
     services:
     - name: efk-es-http
       port: 9200

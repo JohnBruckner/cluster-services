@@ -10,9 +10,13 @@ spec:
   routes:
   - kind: Rule
     match: Host(`ion-cluster.home`) && PathPrefix(`/kibana`)
+    middlewares:
+        - name: stripprefix-logging
+          namespace: logging
     services:
     - name: kibana-kb-http
       port: 5601
       namespace: logging
+
     
    
