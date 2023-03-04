@@ -39,10 +39,11 @@ spec:
   watchedNamespaces: 
   - kube-system
   - default
-  - kafka
+  - metallb-system
   - elastic
-  - fluent
+  - jenkins
   - logging
+  - monitoring
   clusterOutputSelector:
     matchLabels:
       output.fluentd.fluent.io/scope: "cluster"
