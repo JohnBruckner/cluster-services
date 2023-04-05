@@ -13,10 +13,6 @@ spec:
     spec:
       containers:
       - name: kibana
-        resources:
-          limits:
-            memory: 500M
-            cpu: 1
         readinessProbe:
           httpGet:
             scheme: HTTP
