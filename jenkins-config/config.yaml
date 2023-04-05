@@ -11,7 +11,7 @@
 
 # For FQDN resolving of the controller service. Change this value to match your existing configuration.
 # ref: https://github.com/kubernetes/dns/blob/master/docs/specification.md
-clusterZone: "ion-cluster.home"
+clusterZone: "cluster.local"
 
 renderHelmLabels: true
 
@@ -630,7 +630,7 @@ agent:
   # name of the secret to be used for image pulling
   imagePullSecretName:
   componentName: "jenkins-agent"
-  websocket: false
+  websocket: true
   privileged: false
   runAsUser:
   runAsGroup:
