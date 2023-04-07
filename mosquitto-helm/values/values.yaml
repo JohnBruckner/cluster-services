@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: eclipse-mosquitto
-  tag: 2.0.12
+  tag: latest
   pullPolicy: IfNotPresent
 
 nameOverride: ""

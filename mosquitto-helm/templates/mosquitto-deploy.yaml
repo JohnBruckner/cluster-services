@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "mosquitto.fullname" . }}
+  name: {{ .Values.name }}
   labels:
-    app: {{ include "mosquitto.name" . }}
+    app: mosquitto
 spec:
-  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "mosquitto.name" . }}
+      app: mosquitto
+  replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ include "mosquitto.name" . }}
+        app: mosquitto
     spec:
       containers:
         - name: mosquitto
@@ -20,20 +20,28 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 1883
-              protocol: TCP
           volumeMounts:
             - name: mosquitto-data
               mountPath: /mosquitto/data
-            - name: password-file
-              mountPath: {{ .Values.passwordFile.mountPath }}
-              subPath: {{ .Values.passwordFile.filename }}
-          env:
-            - name: MOSQUITTO_PASSWORD_FILE
-              value: {{ .Values.passwordFile.mountPath }}/{{ .Values.passwordFile.filename }}
+            - name: mosquitto-config
+              mountPath: /mosquitto/config
+          {{- if .Values.passwordFile.enabled }}
+            env:
+              - name: MQTT_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.passwordFile.name }}
+                    key: username
+              - name: MQTT_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.passwordFile.name }}
+                    key: password
+          {{- end }}
       volumes:
         - name: mosquitto-data
           persistentVolumeClaim:
-            claimName: mosquitto-data-pvc
-        - name: password-file
+            claimName: {{ .Values.name }}-data
+        - name: mosquitto-config
           configMap:
-            name: {{ include "mosquitto.fullname" . }}-password
+            name: {{ .Values.name }}-config
