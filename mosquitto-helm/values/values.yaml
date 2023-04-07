@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: eclipse-mosquitto
+  tag: 2.0.12
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+persistence:
+  enabled: true
+  storageClass: nfs-client
+  size: 1Gi
+
+passwordFile:
+  enabled: false
+  username: mqttuser
+  password: password
+  mountPath: /mosquitto/config
+  filename: password.txt
+
+service:
+  type: LoadBalancer
+  port: 1883
+  targetPort: 1883

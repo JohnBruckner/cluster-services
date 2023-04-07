@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mosquitto.fullname" . }}
+  labels:
+    app: {{ include "mosquitto.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "mosquitto.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "mosquitto.name" . }}
+    spec:
+      containers:
+        - name: mosquitto
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 1883
+              protocol: TCP
+          volumeMounts:
+            - name: mosquitto-data
+              mountPath: /mosquitto/data
+            - name: password-file
+              mountPath: {{ .Values.passwordFile.mountPath }}
+              subPath: {{ .Values.passwordFile.filename }}
+          env:
+            - name: MOSQUITTO_PASSWORD_FILE
+              value: {{ .Values.passwordFile.mountPath }}/{{ .Values.passwordFile.filename }}
+      volumes:
+        - name: mosquitto-data
+          persistentVolumeClaim:
+            claimName: mosquitto-data-pvc
+        - name: password-file
+          configMap:
+            name: {{ include "mosquitto.fullname" . }}-password
