@@ -7,13 +7,11 @@ image:
 
 namespace: mqtt
 
+name: mosquitto
+
 configMap:
-  name: mosquitto
   anonymous: true
-
-nameOverride: ""
-fullnameOverride: ""
-
+  
 persistence:
   enabled: true
   storageClass: nfs-client
