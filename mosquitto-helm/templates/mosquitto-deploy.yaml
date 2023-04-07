@@ -25,8 +25,8 @@ spec:
               mountPath: /mosquitto/data
             - name: mosquitto-config
               mountPath: /mosquitto/config
-            - name: mosquitto-passwd
-              mountPath: /mosquitto/config/password.txt
+                #- name: mosquitto-passwd
+                #mountPath: /mosquitto/config/password.txt
           {{- if .Values.passwordFile.enabled }}
             env:
               - name: MQTT_USERNAME
@@ -47,6 +47,6 @@ spec:
         - name: mosquitto-config
           configMap:
             name: {{ .Values.name }}-cm
-        - name: mosquitto-passwd
-          configMap:
-            name: {{ .Values.name }}
+              # - name: mosquitto-passwd
+              # configMap:
+              # name: {{ .Values.name }}

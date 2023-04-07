@@ -6,6 +6,6 @@ metadata:
 data:
   mosquitto.conf: |-
     allow_anonymous {{ .Values.configMap.anonymous }}
-    password_file /mosquitto/config/password_file
+    # password_file /mosquitto/config/password_file
     listener {{ .Values.configMap.listenerPort }}
     log_dest stderr
