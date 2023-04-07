@@ -11,6 +11,7 @@ name: mosquitto
 
 configMap:
   anonymous: true
+  listenerPort: 1883
   
 persistence:
   enabled: true
