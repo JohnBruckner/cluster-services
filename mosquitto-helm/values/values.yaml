@@ -5,6 +5,12 @@ image:
   tag: latest
   pullPolicy: IfNotPresent
 
+namespace: mqtt
+
+configMap:
+  name: mosquitto
+  anonymous: true
+
 nameOverride: ""
 fullnameOverride: ""
 

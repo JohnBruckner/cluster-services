@@ -44,4 +44,4 @@ spec:
             claimName: {{ .Values.name }}-data
         - name: mosquitto-config
           configMap:
-            name: {{ .Values.name }}-config
+            name: {{ .Values.configMap.name }}
